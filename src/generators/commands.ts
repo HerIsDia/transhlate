@@ -5,10 +5,16 @@ import {
 
 // command "/about" but in context menu
 export const aboutContext = new ContextMenuCommandBuilder()
-  .setName('about')
-  .setType(2);
+  .setName('translate')
+  .setType(3);
 
 // command "/about"
 export const about = new SlashCommandBuilder()
-  .setName('about')
-  .setDescription('ℹ️ About the bot');
+  .setName('translate')
+  .setDescription('ℹ️ Translate something')
+  .addStringOption((str) =>
+    str
+      .setName('text')
+      .setRequired(true)
+      .setDescription('The text to translate.')
+  );
