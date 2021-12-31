@@ -736,13 +736,13 @@ export const translation = async (
 ) => {
   let currentText: string = startedText;
   await interaction.reply('Translating...');
-  const languagesCodes = translators[translator];
+  const languagesCodes = [...translators[translator]];
   languagesCodes.push(finalLanguage);
-  for (let index = 0; index < translators[translator].length; index++) {
+  for (let index = 0; index < languagesCodes.length; index++) {
     await interaction.editReply({
-      embeds: [inProgress(index + 1, translators[translator].length)],
+      embeds: [inProgress(index + 1, languagesCodes.length)],
     });
-    const lCode = translators[translator][index];
+    const lCode = languagesCodes[index];
     await translate(currentText, { to: `${lCode}` })
       .then((res) => {
         currentText = res.text;
