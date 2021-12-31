@@ -1,6 +1,6 @@
-import { Client, ContextMenuInteraction } from 'discord.js';
+import { Client, ContextMenuInteraction, Message } from 'discord.js';
 import { inProgress, completeEmbed } from '../../generators/embeds';
-import * as translate from '@imlinhanchao/google-translate-api';
+import translate from '@imlinhanchao/google-translate-api';
 import { languagesCodes } from '../..';
 
 export const run = async (
@@ -9,7 +9,7 @@ export const run = async (
 ) => {
   if (interaction.targetType != 'MESSAGE') return;
   let currentText: string = await (
-    await interaction.channel.messages.fetch(interaction.targetId)
+    (await interaction.channel?.messages.fetch(interaction.targetId)) as Message
   ).content;
   const startText = currentText;
   await interaction.reply('Translating...');

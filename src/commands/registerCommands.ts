@@ -11,14 +11,14 @@ export const registerCommands = async (token: string, client: Client) => {
   const commands = [generated.about, generated.aboutContext];
   try {
     if (testServer == undefined) {
-      await rest.put(Routes.applicationCommands(client.user.id), {
+      await rest.put(Routes.applicationCommands(client.user?.id as string), {
         body: commands,
       });
       console.log('application (/) commands refreshed.');
     } else {
       console.log('🧪 Started refreshing application (/) commands.');
       await rest.put(
-        Routes.applicationGuildCommands(client.user.id, testServer),
+        Routes.applicationGuildCommands(client.user?.id as string, testServer),
         {
           body: commands,
         }

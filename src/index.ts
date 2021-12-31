@@ -14,7 +14,7 @@ import { registerCommands } from './commands/registerCommands';
 
 // Create Client and Set Intents
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const token = process.env.TOKEN;
+const token = process.env.TOKEN as string;
 
 client.on('ready', () => {
   registerCommands(token, client);

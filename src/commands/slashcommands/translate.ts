@@ -1,10 +1,10 @@
 import { Client, CommandInteraction } from 'discord.js';
 import { inProgress, completeEmbed } from '../../generators/embeds';
-import * as translate from '@imlinhanchao/google-translate-api';
+import translate from '@imlinhanchao/google-translate-api';
 import { languagesCodes } from '../..';
 
 export const run = async (client: Client, interaction: CommandInteraction) => {
-  let currentText: string = interaction.options.getString('text');
+  let currentText: string = interaction.options.getString('text') as string;
   await interaction.reply('Translating...');
   for (let index = 0; index < languagesCodes.length; index++) {
     await interaction.editReply({
@@ -21,6 +21,11 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
   }
   interaction.editReply({
     content: 'Finished.',
-    embeds: [completeEmbed(interaction.options.getString('text'), currentText)],
+    embeds: [
+      completeEmbed(
+        interaction.options.getString('text') as string,
+        currentText
+      ),
+    ],
   });
 };
