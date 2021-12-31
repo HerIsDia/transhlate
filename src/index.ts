@@ -53,27 +53,3 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 client.login(token);
-
-export const languagesCodes = [
-  'en',
-  'fr',
-  'ja',
-  'am',
-  'de',
-  'es',
-  'it',
-  'pt',
-  'ru',
-  'zh-CN',
-  'zh-TW',
-  'en',
-  'fr',
-  'mt',
-  'ar',
-  'hi',
-  'bn',
-  'pa',
-  'uk',
-  'ur',
-  'en',
-];
