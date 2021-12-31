@@ -1,7 +1,10 @@
 import translate from '@imlinhanchao/google-translate-api';
 import { CommandInteraction, ContextMenuInteraction } from 'discord.js';
 import { completeEmbed, inProgress } from '../generators/embeds';
-import hastebin from 'hastebin-paste';
+import { PasteClient } from 'pastebin-api';
+require('dotenv').config();
+
+const pastebin = new PasteClient(process.env.PASTEBIN_API as string);
 
 const translators = {
   default: [
@@ -750,20 +753,24 @@ export const translation = async (
   }
   const startedTextResult =
     startedText.length > 1024
-      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await hastebin(
-          startedText,
+      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
           {
-            extension: 'txt',
-            prefix: '',
-            message: '',
+            code: startedText,
+            name: 'startedText.txt',
+            expireDate: 'N',
+            publicity: 0,
           }
         )}`
       : startedText;
   const TextResult =
     currentText.length > 1024
-      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await hastebin(
-          currentText,
-          { extension: 'txt', prefix: '', message: '' }
+      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
+          {
+            code: currentText,
+            name: 'endText.txt',
+            expireDate: 'N',
+            publicity: 0,
+          }
         )}`
       : currentText;
   interaction.editReply({

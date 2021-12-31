@@ -27,7 +27,7 @@
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
-    "hastebin-paste": "^1.3.1"
+    "pastebin-api": "^2.6.1"
   },
   "description": "quote translate quote from google translate.",
   "engines": {
