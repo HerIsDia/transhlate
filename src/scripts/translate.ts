@@ -1,6 +1,7 @@
 import translate from '@imlinhanchao/google-translate-api';
 import { CommandInteraction, ContextMenuInteraction } from 'discord.js';
 import { completeEmbed, inProgress } from '../generators/embeds';
+import hastebin from 'hastebin-paste';
 
 const translators = {
   default: [
@@ -747,8 +748,26 @@ export const translation = async (
         interaction.editReply(err);
       });
   }
+  const startedTextResult =
+    startedText.length > 1024
+      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await hastebin(
+          startedText,
+          {
+            extension: 'txt',
+            prefix: '',
+            message: '',
+          }
+        )}`
+      : startedText;
+  const TextResult =
+    currentText.length > 1024
+      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await hastebin(
+          currentText,
+          { extension: 'txt', prefix: '', message: '' }
+        )}`
+      : currentText;
   interaction.editReply({
     content: 'Finished.',
-    embeds: [completeEmbed(startedText, currentText)],
+    embeds: [completeEmbed(startedTextResult, TextResult)],
   });
 };

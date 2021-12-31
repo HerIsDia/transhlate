@@ -11,7 +11,7 @@ export const inProgress = (progress: number, total: number) => {
 export const completeEmbed = (start: string, end: string) => {
   return new Embed()
     .setTitle('Translation complete !')
-    .setDescription(`Your translation was been translated`)
+    .setDescription(`Your text was been translated`)
     .setTimestamp(new Date())
     .setColor(3066993)
     .addField({
