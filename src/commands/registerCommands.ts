@@ -8,7 +8,14 @@ const testServer = process.env.TEST_SERVER;
 
 export const registerCommands = async (token: string, client: Client) => {
   const rest = new REST({ version: '9' }).setToken(token);
-  const commands = [generated.about, generated.aboutContext];
+  const commands = [
+    generated.translate,
+    generated.englishTranslate,
+    generated.frenchTranslate,
+    generated.spannishTranslate,
+    generated.japaneseTranslate,
+    generated.deutschTranslate,
+  ];
   try {
     if (testServer == undefined) {
       await rest.put(Routes.applicationCommands(client.user?.id as string), {

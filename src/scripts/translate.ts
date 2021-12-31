@@ -740,7 +740,7 @@ export const translation = async (
   languagesCodes.push(finalLanguage);
   for (let index = 0; index < languagesCodes.length; index++) {
     await interaction.editReply({
-      embeds: [inProgress(index + 1, languagesCodes.length)],
+      embeds: [inProgress(index, languagesCodes.length)],
     });
     const lCode = languagesCodes[index];
     await translate(currentText, { to: `${lCode}` })

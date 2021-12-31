@@ -1,9 +1,13 @@
 import { Embed } from '@discordjs/builders';
 
 export const inProgress = (progress: number, total: number) => {
+  const percentage = (progress / total) * 100;
+  const percentage2Digits = Math.round(percentage * 100) / 100;
+  const bar = '█'.repeat(Math.round(percentage / 5));
+  const empty = '░'.repeat(20 - Math.round(percentage / 5));
   return new Embed()
     .setTitle('Translation in progress !')
-    .setDescription(`${progress}/${total}`)
+    .setDescription(`${percentage2Digits}%\n${bar}${empty}`)
     .setTimestamp(new Date())
     .setColor(15105570);
 };

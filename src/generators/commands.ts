@@ -3,13 +3,27 @@ import {
   ContextMenuCommandBuilder,
 } from '@discordjs/builders';
 
-// command "/about" but in context menu
-export const aboutContext = new ContextMenuCommandBuilder()
-  .setName('translate')
+export const englishTranslate = new ContextMenuCommandBuilder()
+  .setName('translate-en')
   .setType(3);
 
-// command "/about"
-export const about = new SlashCommandBuilder()
+export const frenchTranslate = new ContextMenuCommandBuilder()
+  .setName('translate-fr')
+  .setType(3);
+
+export const spannishTranslate = new ContextMenuCommandBuilder()
+  .setName('translate-es')
+  .setType(3);
+
+export const japaneseTranslate = new ContextMenuCommandBuilder()
+  .setName('translate-ja')
+  .setType(3);
+
+export const deutschTranslate = new ContextMenuCommandBuilder()
+  .setName('translate-de')
+  .setType(3);
+
+export const translate = new SlashCommandBuilder()
   .setName('translate')
   .setDescription('ℹ️ Translate something')
   .addStringOption((str) =>
@@ -27,12 +41,7 @@ export const about = new SlashCommandBuilder()
       .addChoice('English', 'en')
       .addChoice('Deutsch', 'de')
       .addChoice('Español', 'es')
-      .addChoice('Italiano', 'it')
       .addChoice('日本語', 'ja')
-      .addChoice('한국어', 'ko')
-      .addChoice('Nederlands', 'nl')
-      .addChoice('Norsk', 'no')
-      .addChoice('Polski', 'pl')
   )
   .addStringOption((str) =>
     str
