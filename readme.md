@@ -1,6 +1,6 @@
-# Discord.js bot typescript starter template.
+# Discord Translation Bot
 
-A little template to create quickly a discord bot, made by [Diamantdev.](https://github.com/diamantdev)
+"translate" things on discord using [Google Translate](https://translate.google.com/) ~~but each thing is translated into A LOT of languages.~~
 
 ## Environment Variables
 

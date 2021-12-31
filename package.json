@@ -1,5 +1,5 @@
 {
-  "name": "discord-bot-v13-template",
+  "name": "discord-translation",
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
@@ -28,5 +28,8 @@
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0"
   },
-  "description": "This is a template for creating a discord bot."
+  "description": "quote translate quote from google translate.",
+  "engines": {
+    "node": "16"
+  }
 }
