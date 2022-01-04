@@ -21,6 +21,10 @@ const token = process.env.TOKEN as string;
 
 client.on('ready', () => {
   registerCommands(token, client);
+  client.user?.setActivity({
+    name: `/translate - v0.3.1`,
+    type: 'LISTENING',
+  });
 });
 
 client.on('guildCreate', async (guild) => {
