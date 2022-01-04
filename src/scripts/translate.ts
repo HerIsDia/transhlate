@@ -1,12 +1,9 @@
 import translate from '@imlinhanchao/google-translate-api';
 import { CommandInteraction, ContextMenuInteraction } from 'discord.js';
-import { completeEmbed, inProgress } from '../generators/embeds';
-import { PasteClient } from 'pastebin-api';
-require('dotenv').config();
+import { pastebin } from '..';
+import { translateEmbed } from '../generators/embeds';
 
-const pastebin = new PasteClient(process.env.PASTEBIN_API as string);
-
-const translators = {
+export const translators = {
   default: [
     'English',
     'French',
@@ -734,23 +731,6 @@ export const translation = async (
   finalLanguage: string = 'English',
   translator: Translators = 'default'
 ) => {
-  let currentText: string = startedText;
-  await interaction.reply('Translating...');
-  const languagesCodes = [...translators[translator]];
-  languagesCodes.push(finalLanguage);
-  for (let index = 0; index < languagesCodes.length; index++) {
-    await interaction.editReply({
-      embeds: [inProgress(index, languagesCodes.length)],
-    });
-    const lCode = languagesCodes[index];
-    await translate(currentText, { to: `${lCode}` })
-      .then((res) => {
-        currentText = res.text;
-      })
-      .catch((err) => {
-        interaction.editReply(err);
-      });
-  }
   const startedTextResult =
     startedText.length > 1024
       ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
@@ -762,6 +742,36 @@ export const translation = async (
           }
         )}`
       : startedText;
+  let currentText: string = startedText;
+  await interaction.reply({
+    embeds: [
+      translateEmbed(startedTextResult, 0, 1, finalLanguage, translator),
+    ],
+  });
+  const languagesCodes = [...translators[translator]];
+  languagesCodes.push(finalLanguage);
+  for (let index = 0; index < languagesCodes.length; index++) {
+    await interaction.editReply({
+      embeds: [
+        translateEmbed(
+          startedTextResult,
+          index,
+          languagesCodes.length,
+          finalLanguage,
+          translator
+        ),
+      ],
+    });
+    const lCode = languagesCodes[index];
+    await translate(currentText, { to: `${lCode}` })
+      .then((res) => {
+        currentText = res.text;
+      })
+      .catch((err) => {
+        interaction.editReply(err);
+      });
+  }
+
   const TextResult =
     currentText.length > 1024
       ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
@@ -775,6 +785,15 @@ export const translation = async (
       : currentText;
   interaction.editReply({
     content: 'Finished.',
-    embeds: [completeEmbed(startedTextResult, TextResult)],
+    embeds: [
+      translateEmbed(
+        startedTextResult,
+        languagesCodes.length,
+        languagesCodes.length,
+        finalLanguage,
+        translator,
+        TextResult
+      ),
+    ],
   });
 };

@@ -7,7 +7,10 @@ import {
   Interaction,
 } from 'discord.js';
 import { readFile } from 'fs';
+import { PasteClient } from 'pastebin-api';
 require('dotenv').config();
+
+export const pastebin = new PasteClient(process.env.PASTEBIN_API as string);
 
 // Import Local Functions
 import { registerCommands } from './commands/registerCommands';
@@ -49,7 +52,6 @@ client.on('interactionCreate', async (interaction) => {
       }
     }
   );
-  console.log(commandType);
 });
 
 client.login(token);

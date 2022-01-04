@@ -3,27 +3,27 @@ import {
   ContextMenuCommandBuilder,
 } from '@discordjs/builders';
 
-export const englishTranslate = new ContextMenuCommandBuilder()
+const englishTranslate = new ContextMenuCommandBuilder()
   .setName('translate-en')
   .setType(3);
 
-export const frenchTranslate = new ContextMenuCommandBuilder()
+const frenchTranslate = new ContextMenuCommandBuilder()
   .setName('translate-fr')
   .setType(3);
 
-export const spannishTranslate = new ContextMenuCommandBuilder()
+const spannishTranslate = new ContextMenuCommandBuilder()
   .setName('translate-es')
   .setType(3);
 
-export const japaneseTranslate = new ContextMenuCommandBuilder()
+const japaneseTranslate = new ContextMenuCommandBuilder()
   .setName('translate-ja')
   .setType(3);
 
-export const deutschTranslate = new ContextMenuCommandBuilder()
+const deutschTranslate = new ContextMenuCommandBuilder()
   .setName('translate-de')
   .setType(3);
 
-export const translate = new SlashCommandBuilder()
+const translate = new SlashCommandBuilder()
   .setName('translate')
   .setDescription('ℹ️ Translate something')
   .addStringOption((str) =>
@@ -65,3 +65,36 @@ export const translate = new SlashCommandBuilder()
       .addChoice('Qualidad', 'qualidad')
       .addChoice('THE ULTIMATE', 'ultimate')
   );
+
+const bulkTranslate = new SlashCommandBuilder()
+  .setName('bulk-translate')
+  .setDescription(
+    'ℹ️ Translate something with ALL translators at the same time.'
+  )
+  .addStringOption((str) =>
+    str
+      .setName('text')
+      .setRequired(true)
+      .setDescription('The text to translate.')
+  )
+  .addStringOption((str) =>
+    str
+      .setName('language')
+      .setRequired(false)
+      .setDescription('The final language to translate to.')
+      .addChoice('Français', 'fr')
+      .addChoice('English', 'en')
+      .addChoice('Deutsch', 'de')
+      .addChoice('Español', 'es')
+      .addChoice('日本語', 'ja')
+  );
+
+export const commands = [
+  englishTranslate,
+  frenchTranslate,
+  spannishTranslate,
+  japaneseTranslate,
+  deutschTranslate,
+  translate,
+  bulkTranslate,
+];
