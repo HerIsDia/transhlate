@@ -30,7 +30,8 @@
     "pastebin-api": "^2.6.1"
   },
   "description": "quote translate quote from google translate.",
-  "engines": {
-    "node": "16"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diamantdev/discord-translator.git"
+  },
 }
