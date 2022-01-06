@@ -9,5 +9,13 @@ export const run = async (
   const startText: string = await (
     (await interaction.channel?.messages.fetch(interaction.targetId)) as Message
   ).content;
-  translation(interaction, startText, 'en');
+  translation(
+    interaction,
+    startText,
+    'en',
+    'default',
+    interaction.user,
+    true,
+    true
+  );
 };

@@ -1,5 +1,6 @@
 // Import NPM Packages
 import {
+  ButtonInteraction,
   Client,
   CommandInteraction,
   ContextMenuInteraction,
@@ -22,7 +23,7 @@ const token = process.env.TOKEN as string;
 client.on('ready', () => {
   registerCommands(token, client);
   client.user?.setActivity({
-    name: `/translate - v0.3.1`,
+    name: `/translate - v0.4`,
     type: 'LISTENING',
   });
 });
@@ -32,27 +33,50 @@ client.on('guildCreate', async (guild) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand() && !interaction.isContextMenu()) return;
-  const commandType = interaction.isCommand() ? 'slashcommands' : 'contextmenu';
+  if (
+    !interaction.isCommand() &&
+    !interaction.isContextMenu() &&
+    !interaction.isButton()
+  )
+    return;
+  const commandType = interaction.isCommand()
+    ? 'slashcommands'
+    : interaction.isContextMenu()
+    ? 'contextmenu'
+    : 'button';
   readFile(
-    `./src/commands/${commandType}/${interaction.commandName}.ts`,
+    `./src/commands/${commandType}/${
+      interaction.isButton() ? interaction.customId : interaction.commandName
+    }.ts`,
     'utf8',
     (err) => {
       if (err) {
-        interaction.reply(`❌ ${err.message}`);
+        interaction.reply({
+          content: `❌ ! ${err}`,
+          ephemeral: true,
+        });
         return;
       }
       try {
-        const cmd =
-          require(`./commands/${commandType}/${interaction.commandName}.ts`) as {
-            run: (
-              client: Client,
-              interaction: CommandInteraction | ContextMenuInteraction
-            ) => void;
-          };
+        const cmd = require(`./commands/${commandType}/${
+          interaction.isButton()
+            ? interaction.customId
+            : interaction.commandName
+        }.ts`) as {
+          run: (
+            client: Client,
+            interaction:
+              | CommandInteraction
+              | ContextMenuInteraction
+              | ButtonInteraction
+          ) => void;
+        };
         cmd.run(client, interaction);
       } catch (error) {
-        interaction.reply(`❌ ! ${error}`);
+        interaction.reply({
+          content: `❌ ! ${error}`,
+          ephemeral: true,
+        });
       }
     }
   );

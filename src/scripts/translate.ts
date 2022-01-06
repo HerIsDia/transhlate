@@ -1,5 +1,11 @@
 import translate from '@imlinhanchao/google-translate-api';
-import { CommandInteraction, ContextMenuInteraction } from 'discord.js';
+import {
+  CommandInteraction,
+  ContextMenuInteraction,
+  MessageActionRow,
+  MessageButton,
+  User,
+} from 'discord.js';
 import { pastebin } from '..';
 import { translateEmbed } from '../generators/embeds';
 
@@ -707,6 +713,115 @@ export const translators = {
   ],
 };
 
+export const gLanguages = {
+  'zh-CN': 'Chinese (Simplified)',
+  'zh-TW': 'Chinese (Traditional)',
+  af: 'Afrikaans',
+  am: 'Amharic',
+  ar: 'Arabic',
+  auto: 'Automatic',
+  az: 'Azerbaijani',
+  be: 'Belarusian',
+  bg: 'Bulgarian',
+  bn: 'Bengali',
+  bs: 'Bosnian',
+  ca: 'Catalan',
+  ceb: 'Cebuano',
+  co: 'Corsican',
+  cs: 'Czech',
+  cy: 'Welsh',
+  da: 'Danish',
+  de: 'German',
+  el: 'Greek',
+  en: 'English',
+  eo: 'Esperanto',
+  es: 'Spanish',
+  et: 'Estonian',
+  eu: 'Basque',
+  fa: 'Persian',
+  fi: 'Finnish',
+  fr: 'French',
+  fy: 'Frisian',
+  ga: 'Irish',
+  gd: 'Scots Gaelic',
+  gl: 'Galician',
+  gu: 'Gujarati',
+  ha: 'Hausa',
+  haw: 'Hawaiian',
+  he: 'Hebrew',
+  hi: 'Hindi',
+  hmn: 'Hmong',
+  hr: 'Croatian',
+  ht: 'Haitian Creole',
+  hu: 'Hungarian',
+  hy: 'Armenian',
+  id: 'Indonesian',
+  ig: 'Igbo',
+  is: 'Icelandic',
+  it: 'Italian',
+  iw: 'Hebrew',
+  ja: 'Japanese',
+  jw: 'Javanese',
+  ka: 'Georgian',
+  kk: 'Kazakh',
+  km: 'Khmer',
+  kn: 'Kannada',
+  ko: 'Korean',
+  ku: 'Kurdish (Kurmanji)',
+  ky: 'Kyrgyz',
+  la: 'Latin',
+  lb: 'Luxembourgish',
+  lo: 'Lao',
+  lt: 'Lithuanian',
+  lv: 'Latvian',
+  mg: 'Malagasy',
+  mi: 'Maori',
+  mk: 'Macedonian',
+  ml: 'Malayalam',
+  mn: 'Mongolian',
+  mr: 'Marathi',
+  ms: 'Malay',
+  mt: 'Maltese',
+  my: 'Myanmar (Burmese)',
+  ne: 'Nepali',
+  nl: 'Dutch',
+  no: 'Norwegian',
+  ny: 'Chichewa',
+  pa: 'Punjabi',
+  pl: 'Polish',
+  ps: 'Pashto',
+  pt: 'Portuguese',
+  ro: 'Romanian',
+  ru: 'Russian',
+  sd: 'Sindhi',
+  si: 'Sinhala',
+  sk: 'Slovak',
+  sl: 'Slovenian',
+  sm: 'Samoan',
+  sn: 'Shona',
+  so: 'Somali',
+  sq: 'Albanian',
+  sr: 'Serbian',
+  st: 'Sesotho',
+  su: 'Sundanese',
+  sv: 'Swedish',
+  sw: 'Swahili',
+  ta: 'Tamil',
+  te: 'Telugu',
+  tg: 'Tajik',
+  th: 'Thai',
+  tl: 'Filipino',
+  tr: 'Turkish',
+  uk: 'Ukrainian',
+  ur: 'Urdu',
+  uz: 'Uzbek',
+  vi: 'Vietnamese',
+  xh: 'Xhosa',
+  yi: 'Yiddish',
+  yo: 'Yoruba',
+  zu: 'Zulu',
+};
+
 export type Translators =
   | 'default'
   | 'minimalist'
@@ -728,9 +843,17 @@ export type Translators =
 export const translation = async (
   interaction: ContextMenuInteraction | CommandInteraction,
   startedText: string,
-  finalLanguage: string = 'English',
-  translator: Translators = 'default'
+  final: string | 'en' | 'fr' | 'de' | 'es' | 'ja' = 'English',
+  translator: Translators = 'default',
+  user: User,
+  isHidden: boolean = false,
+  haveOptionToShow: boolean = false
 ) => {
+  const finalLanguage =
+    final.length == 2
+      ? gLanguages[final as 'en' | 'fr' | 'de' | 'es' | 'ja']
+      : final;
+
   const startedTextResult =
     startedText.length > 1024
       ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
@@ -744,8 +867,9 @@ export const translation = async (
       : startedText;
   let currentText: string = startedText;
   await interaction.reply({
+    ephemeral: isHidden,
     embeds: [
-      translateEmbed(startedTextResult, 0, 1, finalLanguage, translator),
+      translateEmbed(startedTextResult, 0, 1, finalLanguage, translator, user),
     ],
   });
   const languagesCodes = [...translators[translator]];
@@ -758,7 +882,8 @@ export const translation = async (
           index,
           languagesCodes.length,
           finalLanguage,
-          translator
+          translator,
+          user
         ),
       ],
     });
@@ -783,8 +908,7 @@ export const translation = async (
           }
         )}`
       : currentText;
-  interaction.editReply({
-    content: 'Finished.',
+  await interaction.editReply({
     embeds: [
       translateEmbed(
         startedTextResult,
@@ -792,8 +916,21 @@ export const translation = async (
         languagesCodes.length,
         finalLanguage,
         translator,
+        user,
         TextResult
       ),
     ],
   });
+  if (haveOptionToShow) {
+    interaction.editReply({
+      components: [
+        new MessageActionRow().addComponents(
+          new MessageButton()
+            .setCustomId('show-hidden')
+            .setLabel('Show the result to the world !')
+            .setStyle('PRIMARY')
+        ),
+      ],
+    });
+  }
 };

@@ -9,5 +9,11 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
   const translator: Translators = interaction.options.getString('translator')
     ? (interaction.options.getString('translator') as Translators)
     : 'default';
-  translation(interaction, startText, finalLanguage, translator);
+  translation(
+    interaction,
+    startText,
+    finalLanguage,
+    translator,
+    interaction.user
+  );
 };

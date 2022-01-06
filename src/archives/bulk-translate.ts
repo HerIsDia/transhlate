@@ -1,10 +1,10 @@
 import { Client, CommandInteraction } from 'discord.js';
-import { pastebin } from '../..';
-import { bulkTranslateEmbed } from '../../generators/embeds';
+import { pastebin } from '..';
+import { bulkTranslateEmbed } from './archived-embed';
 import {
   Translators,
   translators as translatorLanguages,
-} from '../../scripts/translate';
+} from '../scripts/translate';
 import translate from '@imlinhanchao/google-translate-api';
 import { Embed } from '@discordjs/builders';
 

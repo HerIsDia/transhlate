@@ -1,12 +1,16 @@
 {
   "name": "discord-translation",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start": "ts-node src/index.ts"
   },
-  "keywords": ["template", "discord", "bot"],
+  "keywords": [
+    "template",
+    "discord",
+    "bot"
+  ],
   "author": "Diamant Lelouette <git@diamant.dev> (https://diamant.dev/)",
   "license": "MIT",
   "devDependencies": {
