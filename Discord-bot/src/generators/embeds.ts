@@ -2,8 +2,8 @@ import { Embed } from '@discordjs/builders';
 import { User } from 'discord.js';
 import { start } from 'repl';
 import {
-  Translators,
-  translators as translatorLanguages,
+  transhlators,
+  transhlators as transhlatorLanguages,
 } from '../scripts/translate';
 
 const inProgressNumber = (progress: number, total: number) => {
@@ -22,7 +22,7 @@ export const translateEmbed = (
   progress: number,
   total: number,
   finalLanguage: string,
-  translator: Translators,
+  transhlator: transhlators,
   user: User,
   end?: string
 ) => {
@@ -36,8 +36,8 @@ export const translateEmbed = (
       end
         ? `Your text has been translated into ${total} languages.`
         : `${inProgressNumber(progress, total).percentage2Digits}%. (${
-            translatorLanguages[translator].length > progress
-              ? translatorLanguages[translator][progress]
+            transhlatorLanguages[transhlator].length > progress
+              ? transhlatorLanguages[transhlator][progress]
               : finalLanguage
           })`
     )
@@ -54,7 +54,7 @@ export const translateEmbed = (
         : `> ${inProgressNumber(progress, total).allBar}`,
     })
     .setFooter({
-      text: `Using the ${translator.toLowerCase()} translator, result in ${finalLanguage.toLowerCase()}.`,
+      text: `Using the ${transhlator.toLowerCase()} transhlators, result in ${finalLanguage.toLowerCase()}.`,
     })
     .setAuthor({
       name: user.tag,

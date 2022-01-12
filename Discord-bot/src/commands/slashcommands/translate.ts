@@ -1,5 +1,5 @@
 import { Client, CommandInteraction } from 'discord.js';
-import { translation, Translators } from '../../scripts/translate';
+import { translation, transhlators } from '../../scripts/translate';
 import wiki, { Page } from 'wikipedia';
 
 export const run = async (client: Client, interaction: CommandInteraction) => {
@@ -7,8 +7,8 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
   const finalLanguage: string = interaction.options.getString('language')
     ? (interaction.options.getString('language') as string)
     : 'English';
-  const translator: Translators = interaction.options.getString('translator')
-    ? (interaction.options.getString('translator') as Translators)
+  const transhlator: transhlators = interaction.options.getString('transhlator')
+    ? (interaction.options.getString('transhlator') as transhlators)
     : 'default';
 
   if (
@@ -35,7 +35,7 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     interaction,
     startText,
     finalLanguage,
-    translator,
+    transhlator,
     interaction.user
   );
 };

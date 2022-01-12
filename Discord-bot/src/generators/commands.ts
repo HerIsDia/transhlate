@@ -45,9 +45,9 @@ const translate = new SlashCommandBuilder()
   )
   .addStringOption((str) =>
     str
-      .setName('translator')
+      .setName('transhlator')
       .setRequired(false)
-      .setDescription('The translator to use.')
+      .setDescription('The transhlator to use.')
       .addChoice('Default', 'default')
       .addChoice('The Minimalist', 'minimalist')
       .addChoice('The original', 'original')

@@ -9,7 +9,7 @@ import {
 import { pastebin } from '..';
 import { translateEmbed } from '../generators/embeds';
 
-export const translators = {
+export const transhlators = {
   default: [
     'English',
     'French',
@@ -822,7 +822,7 @@ export const gLanguages = {
   zu: 'Zulu',
 };
 
-export type Translators =
+export type transhlators =
   | 'default'
   | 'minimalist'
   | 'original'
@@ -844,7 +844,7 @@ export const translation = async (
   interaction: ContextMenuInteraction | CommandInteraction,
   startedText: string,
   final: string | 'en' | 'fr' | 'de' | 'es' | 'ja' = 'English',
-  translator: Translators = 'default',
+  transhlator: transhlators = 'default',
   user: User,
   isHidden: boolean = false,
   haveOptionToShow: boolean = false
@@ -869,10 +869,10 @@ export const translation = async (
   await interaction.reply({
     ephemeral: isHidden,
     embeds: [
-      translateEmbed(startedTextResult, 0, 1, finalLanguage, translator, user),
+      translateEmbed(startedTextResult, 0, 1, finalLanguage, transhlator, user),
     ],
   });
-  const languagesCodes = [...translators[translator]];
+  const languagesCodes = [...transhlators[transhlator]];
   languagesCodes.push(finalLanguage);
   for (let index = 0; index < languagesCodes.length; index++) {
     await interaction.editReply({
@@ -882,7 +882,7 @@ export const translation = async (
           index,
           languagesCodes.length,
           finalLanguage,
-          translator,
+          transhlator,
           user
         ),
       ],
@@ -915,7 +915,7 @@ export const translation = async (
         languagesCodes.length,
         languagesCodes.length,
         finalLanguage,
-        translator,
+        transhlator,
         user,
         TextResult
       ),
