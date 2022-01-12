@@ -1,6 +1,6 @@
 {
-  "name": "discord-translation",
-  "version": "0.4.0",
+  "name": "transhlatorbot",
+  "version": "0.5.0",
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
@@ -27,11 +27,12 @@
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
-    "pastebin-api": "^2.6.1"
+    "pastebin-api": "^2.6.1",
+    "wikipedia": "^1.1.6"
   },
   "description": "quote translate quote from google translate.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diamantdev/discord-translator.git"
+    "url": "git+https://github.com/diamantdev/transhlator.git"
   }
 }
