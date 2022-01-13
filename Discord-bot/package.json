@@ -27,7 +27,7 @@
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
-    "pastebin-api": "^2.6.1",
+    "pastekan": "^0.2.5",
     "wikipedia": "^1.1.6"
   },
   "description": "When you use Google Translate a lot of time.",

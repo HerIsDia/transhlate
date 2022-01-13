@@ -8,10 +8,7 @@ import {
   Interaction,
 } from 'discord.js';
 import { readFile } from 'fs';
-import { PasteClient } from 'pastebin-api';
 require('dotenv').config();
-
-export const pastebin = new PasteClient(process.env.PASTEBIN_API as string);
 
 // Import Local Functions
 import { registerCommands } from './commands/registerCommands';
@@ -23,7 +20,7 @@ const token = process.env.TOKEN as string;
 client.on('ready', () => {
   registerCommands(token, client);
   client.user?.setActivity({
-    name: `/translate - v0.5.1`,
+    name: `/translate - v0.5.2`,
     type: 'LISTENING',
   });
 });

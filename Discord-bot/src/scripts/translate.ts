@@ -6,7 +6,7 @@ import {
   MessageButton,
   User,
 } from 'discord.js';
-import { pastebin } from '..';
+import * as paste from 'pastekan';
 import { translateEmbed } from '../generators/embeds';
 
 export const transhlators = {
@@ -854,17 +854,15 @@ export const translation = async (
       ? gLanguages[final as 'en' | 'fr' | 'de' | 'es' | 'ja']
       : final;
 
-  const startedTextResult =
-    startedText.length > 1024
-      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
-          {
-            code: startedText,
-            name: 'startedText.txt',
-            expireDate: 'N',
-            publicity: 0,
-          }
-        )}`
-      : startedText;
+  let startedTextResult = startedText;
+  if (startedText.length > 1024) {
+    const pastetext = await paste.createPaste(startedText, {
+      raw: true,
+      server: 'https://hastebin.com',
+    });
+    startedTextResult = `**The text was too long to be rendered here, a link to the text has been generated.**\n${pastetext}`;
+  }
+
   let currentText: string = startedText;
   await interaction.reply({
     ephemeral: isHidden,
@@ -897,17 +895,15 @@ export const translation = async (
       });
   }
 
-  const TextResult =
-    currentText.length > 1024
-      ? `**The text was too long to be rendered here, a link to the text has been generated.**\n${await pastebin.createPaste(
-          {
-            code: currentText,
-            name: 'endText.txt',
-            expireDate: 'N',
-            publicity: 0,
-          }
-        )}`
-      : currentText;
+  let TextResult = currentText;
+  if (TextResult.length > 1024) {
+    const pastetext = await paste.createPaste(TextResult, {
+      raw: true,
+      server: 'https://hastebin.com',
+    });
+    TextResult = `**The text was too long to be rendered here, a link to the text has been generated.**\n${pastetext}`;
+  }
+
   await interaction.editReply({
     embeds: [
       translateEmbed(
