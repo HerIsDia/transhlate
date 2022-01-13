@@ -13,7 +13,6 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     : 'default';
 
   let isInvisible = false;
-  let isPublicable = true;
 
   if (
     startText.toLowerCase().startsWith('wikipedia:') ||
@@ -24,7 +23,6 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     const wikiResult = await wiki.page(startText).catch((err) => {
       startText = `${startText} on Wikipedia don't exist. Try again.`;
       isInvisible = true;
-      isPublicable = false;
       return;
     });
     if (wikiResult) {
@@ -50,7 +48,6 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
       .catch((err) => {
         startText = `${startText} is not a valid message ID.\nThe message need to be in the same channel than the command.`;
         isInvisible = true;
-        isPublicable = false;
         return;
       });
     if (message) {
@@ -65,6 +62,6 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     transhlator,
     interaction.user,
     isInvisible,
-    isPublicable
+    false
   );
 };
