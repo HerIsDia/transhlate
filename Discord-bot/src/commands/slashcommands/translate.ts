@@ -1,15 +1,19 @@
 import { Client, CommandInteraction } from 'discord.js';
 import { translation, transhlators } from '../../scripts/translate';
 import wiki, { Page } from 'wikipedia';
+import { start } from 'repl';
 
 export const run = async (client: Client, interaction: CommandInteraction) => {
-  let startText: string = interaction.options.getString('text') as string;
+  let startText: string = interaction.options.getString('content') as string;
   const finalLanguage: string = interaction.options.getString('language')
     ? (interaction.options.getString('language') as string)
     : 'English';
   const transhlator: transhlators = interaction.options.getString('transhlator')
     ? (interaction.options.getString('transhlator') as transhlators)
     : 'default';
+
+  let isVisible = true;
+  let isPublicable = true;
 
   if (
     startText.toLowerCase().startsWith('wikipedia:') ||
@@ -18,6 +22,9 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
   ) {
     startText = startText.split(':').slice(1).join(':');
     const wikiResult = await wiki.page(startText).catch((err) => {
+      startText = `${startText} on Wikipedia don't exist. Try again.`;
+      isVisible = false;
+      isPublicable = false;
       return;
     });
     if (wikiResult) {
@@ -31,11 +38,33 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
       startText = wikiText.extract;
     }
   }
+
+  // detect if the startText is a discord message ID by detecting if the string contain only numbers
+  if (
+    startText.length === 18 &&
+    interaction.channel &&
+    startText.match(/^\d+$/)
+  ) {
+    const message = await interaction.channel.messages
+      .fetch(startText)
+      .catch((err) => {
+        startText = `${startText} is not a valid message ID.\nThe message need to be in the same channel than the command.`;
+        isVisible = false;
+        isPublicable = false;
+        return;
+      });
+    if (message) {
+      startText = message.content;
+    }
+  }
+
   translation(
     interaction,
     startText,
     finalLanguage,
     transhlator,
-    interaction.user
+    interaction.user,
+    isVisible,
+    isPublicable
   );
 };
