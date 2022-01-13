@@ -12,7 +12,7 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     ? (interaction.options.getString('transhlator') as transhlators)
     : 'default';
 
-  let isVisible = true;
+  let isInvisible = false;
   let isPublicable = true;
 
   if (
@@ -23,7 +23,7 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     startText = startText.split(':').slice(1).join(':');
     const wikiResult = await wiki.page(startText).catch((err) => {
       startText = `${startText} on Wikipedia don't exist. Try again.`;
-      isVisible = false;
+      isInvisible = true;
       isPublicable = false;
       return;
     });
@@ -49,7 +49,7 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
       .fetch(startText)
       .catch((err) => {
         startText = `${startText} is not a valid message ID.\nThe message need to be in the same channel than the command.`;
-        isVisible = false;
+        isInvisible = true;
         isPublicable = false;
         return;
       });
@@ -64,7 +64,7 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     finalLanguage,
     transhlator,
     interaction.user,
-    isVisible,
+    isInvisible,
     isPublicable
   );
 };

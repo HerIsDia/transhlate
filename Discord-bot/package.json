@@ -1,6 +1,6 @@
 {
   "name": "transhlatebot",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
