@@ -28,9 +28,11 @@ const translate = new SlashCommandBuilder()
   .setDescription('ℹ️ Translate something')
   .addStringOption((str) =>
     str
-      .setName('text')
+      .setName('content')
       .setRequired(true)
-      .setDescription('The text to translate.')
+      .setDescription(
+        'The content to translate. Can be a message ID, a text or a special keyword (like w:[...]).'
+      )
   )
   .addStringOption((str) =>
     str
