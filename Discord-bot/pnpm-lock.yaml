@@ -13,6 +13,7 @@ specifiers:
   ts-node-dev: ^1.1.8
   tslib: ^2.3.1
   typescript: ^4.5.2
+  wikipedia: ^1.1.6
 
 dependencies:
   '@discordjs/builders': 0.11.0
@@ -22,6 +23,7 @@ dependencies:
   discord.js: 13.5.0
   dotenv: 10.0.0
   pastebin-api: 2.6.1
+  wikipedia: 1.1.6
 
 devDependencies:
   '@types/node': 17.0.5
@@ -217,6 +219,11 @@ packages:
       lowercase-keys: 2.0.0
       normalize-url: 4.5.1
       responselike: 1.0.2
+    dev: false
+
+  /camelcase/4.1.0:
+    resolution: {integrity: sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=}
+    engines: {node: '>=4'}
     dev: false
 
   /chokidar/3.5.2:
@@ -491,6 +498,12 @@ packages:
       once: 1.4.0
       wrappy: 1.0.2
     dev: true
+
+  /infobox-parser/3.6.2:
+    resolution: {integrity: sha512-lasdwvbtjCtDDO6mArAs/ueFEnBJRyo2UbZPAkd5rEG5NVJ3XFCOvbMwNTT/rJlFv1+ORw8D3UvZV4brpgATCg==}
+    dependencies:
+      camelcase: 4.1.0
+    dev: false
 
   /inherits/2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -878,6 +891,14 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
+    dev: false
+
+  /wikipedia/1.1.6:
+    resolution: {integrity: sha512-Ff3PzinsTqTdu0Ub28eJGZVlDXaW5D3inizaZqF7lPYqD7s8iw+9zXN6B5J6kLmAHrBVk8wj8exL0u3ULTKlnw==}
+    engines: {node: '>=10'}
+    dependencies:
+      infobox-parser: 3.6.2
+      node-fetch: 2.6.6
     dev: false
 
   /wrappy/1.0.2:

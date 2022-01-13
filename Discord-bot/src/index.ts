@@ -23,7 +23,7 @@ const token = process.env.TOKEN as string;
 client.on('ready', () => {
   registerCommands(token, client);
   client.user?.setActivity({
-    name: `/translate - v0.4`,
+    name: `/translate - v0.5`,
     type: 'LISTENING',
   });
 });
