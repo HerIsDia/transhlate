@@ -17,17 +17,17 @@ export const run = async (client: Client, interaction: CommandInteraction) => {
     startText.toLowerCase().startsWith('w:')
   ) {
     startText = startText.split(':').slice(1).join(':');
-    const wikiResult = (await wiki.page(startText).catch((err) => {
+    const wikiResult = await wiki.page(startText).catch((err) => {
       return;
-    })) as Page;
-    const wikiText = await wikiResult.summary();
-    if (wikiText.extract.toLowerCase().endsWith('may refer to:')) {
-      const wikiRelated = await wiki.related(startText);
-      const relatedLengh = wikiRelated.pages.length;
-      const randomRelated = Math.floor(Math.random() * relatedLengh);
-      const relatedPage = wikiRelated.pages[randomRelated];
-      startText = relatedPage.extract;
-    } else {
+    });
+    if (wikiResult) {
+      let wikiText = await wikiResult.summary();
+      while (wikiText.extract.toLowerCase().endsWith('may refer to:')) {
+        const wikiRelated = await wiki.related(startText);
+        const relatedLengh = wikiRelated.pages.length;
+        const randomRelated = Math.floor(Math.random() * relatedLengh);
+        wikiText = wikiRelated.pages[randomRelated];
+      }
       startText = wikiText.extract;
     }
   }
