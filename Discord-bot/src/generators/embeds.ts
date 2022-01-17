@@ -20,8 +20,7 @@ const inProgressNumber = (progress: number, total: number) => {
 export const translateEmbed = (
   start: string,
   progress: number,
-  total: number,
-  finalLanguage: string,
+  languages: string[],
   transhlator: transhlators,
   user: User,
   end?: string
@@ -34,11 +33,13 @@ export const translateEmbed = (
     )
     .setDescription(
       end
-        ? `Your text has been translated into ${total} languages.`
-        : `${inProgressNumber(progress, total).percentage2Digits}%. (${
-            transhlatorLanguages[transhlator].length > progress
-              ? transhlatorLanguages[transhlator][progress]
-              : finalLanguage
+        ? `Your text has been translated into ${languages.length} languages.`
+        : `${
+            inProgressNumber(progress, languages.length).percentage2Digits
+          }%. (${
+            languages.length > progress
+              ? languages[progress]
+              : languages[languages.length - 1]
           })`
     )
     .setTimestamp(new Date())
@@ -51,10 +52,12 @@ export const translateEmbed = (
       name: 'to',
       value: end
         ? `> ${end.replace(/\n/g, '\n> ')}`
-        : `> ${inProgressNumber(progress, total).allBar}`,
+        : `> ${inProgressNumber(progress, languages.length).allBar}`,
     })
     .setFooter({
-      text: `Using the ${transhlator.toLowerCase()} transhlators, result in ${finalLanguage.toLowerCase()}.`,
+      text: `Using the ${transhlator.toLowerCase()} transhlators, result in ${languages[
+        languages.length - 1
+      ].toLowerCase()}.`,
     })
     .setAuthor({
       name: user.tag,
