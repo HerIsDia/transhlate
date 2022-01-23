@@ -2,8 +2,6 @@
 
 Transhlate is a fun tool to "translate" a text from a lot of different language to transform your text into a completly another text.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N56FZOR)
-
 [![GitHub license](https://img.shields.io/github/license/diamantdev/transhlate?color=b69bc9&style=for-the-badge)](https://github.com/diamantdev/transhlate)
 [![GitHub stars](https://img.shields.io/github/stars/diamantdev/transhlate?color=b69bc9&style=for-the-badge)](https://github.com/diamantdev/transhlate)
 [![GitHub forks](https://img.shields.io/github/forks/diamantdev/transhlate?color=b69bc9&style=for-the-badge)](https://github.com/diamantdev/transhlate)
