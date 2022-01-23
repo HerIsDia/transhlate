@@ -713,13 +713,12 @@ export const transhlators = {
   ],
 };
 
-export const gLanguages = {
+export const gLanguages: { [key in string]: string } = {
   'zh-CN': 'Chinese (Simplified)',
   'zh-TW': 'Chinese (Traditional)',
   af: 'Afrikaans',
   am: 'Amharic',
   ar: 'Arabic',
-  auto: 'Automatic',
   az: 'Azerbaijani',
   be: 'Belarusian',
   bg: 'Bulgarian',
@@ -838,7 +837,22 @@ export type transhlators =
   | 'lunatic'
   | 'z'
   | 'qualidad'
-  | 'ultimate';
+  | 'ultimate'
+  | 'random';
+
+const randomTranshlation = () => {
+  const numberOfTranshlators = 1 + Math.floor(Math.random() * 98);
+  let result: string[] = [];
+  for (let index = 0; index < numberOfTranshlators; index++) {
+    const randomNumberOfgLanguages = Math.floor(
+      Math.random() * Object.keys(gLanguages).length
+    );
+    const languageRandomised =
+      Object.keys(gLanguages)[randomNumberOfgLanguages];
+    result.push(gLanguages[languageRandomised]);
+  }
+  return result;
+};
 
 export const translation = async (
   interaction: ContextMenuInteraction | CommandInteraction,
@@ -849,10 +863,7 @@ export const translation = async (
   isHidden: boolean = false,
   haveOptionToShow: boolean = false
 ) => {
-  const finalLanguage =
-    final.length == 2
-      ? gLanguages[final as 'en' | 'fr' | 'de' | 'es' | 'ja']
-      : final;
+  const finalLanguage = final.length == 2 ? gLanguages[final] : final;
 
   let startedTextResult = startedText;
   if (startedText.length > 1024) {
@@ -867,10 +878,13 @@ export const translation = async (
   await interaction.reply({
     ephemeral: isHidden,
     embeds: [
-      translateEmbed(startedTextResult, 0, 1, finalLanguage, transhlator, user),
+      translateEmbed(startedTextResult, 0, [finalLanguage], transhlator, user),
     ],
   });
-  const languagesCodes = [...transhlators[transhlator]];
+  const languagesCodes =
+    transhlator == 'random'
+      ? randomTranshlation()
+      : [...transhlators[transhlator]];
   languagesCodes.push(finalLanguage);
   for (let index = 0; index < languagesCodes.length; index++) {
     await interaction.editReply({
@@ -878,8 +892,7 @@ export const translation = async (
         translateEmbed(
           startedTextResult,
           index,
-          languagesCodes.length,
-          finalLanguage,
+          languagesCodes,
           transhlator,
           user
         ),
@@ -909,8 +922,7 @@ export const translation = async (
       translateEmbed(
         startedTextResult,
         languagesCodes.length,
-        languagesCodes.length,
-        finalLanguage,
+        languagesCodes,
         transhlator,
         user,
         TextResult

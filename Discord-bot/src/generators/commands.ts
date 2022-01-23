@@ -66,6 +66,10 @@ const translate = new SlashCommandBuilder()
       .addChoice('The Z', 'z')
       .addChoice('Qualidad', 'qualidad')
       .addChoice('THE ULTIMATE', 'ultimate')
+      .addChoice(
+        'Surprise ! (Translate a thing between 1 and 100 languages)',
+        'random'
+      )
   );
 
 export const commands = [
