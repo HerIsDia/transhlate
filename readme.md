@@ -8,6 +8,8 @@ Transhlate is a fun tool to "translate" a text from a lot of different language 
 [![GitHub issues](https://img.shields.io/github/issues/diamantdev/transhlate?color=b69bc9&style=for-the-badge)](https://github.com/diamantdev/transhlate)
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/diamantdev/transhlate?color=b69bc9&include_prereleases&style=for-the-badge)
 
+<a href="https://www.producthunt.com/posts/transhlate?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-transhlate" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=328096&theme=dark" alt="Transhlate - When you use Google Translate a lot of time. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## What is this thing ?
 
 Transhlate is a fun tool developped by [DiamantDev](https://diamantdev.github.io) to "translate" a text from a lot of different language to transform your text into a completly another text.
